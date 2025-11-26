@@ -27,8 +27,9 @@ __all__ = [
     'load_named_models'
 ]
 
-#keras_model_base_path = '/dbfs/mnt/dev-zone0/user/peter.hawkins/projects/TCR_VAE/logged_models/'
+keras_model_base_path = 'C:\\Users\\admin\\Documents\\GitHub\\tcrvalid\\tcrvalid\\logged_models\\'
 keras_model_names = []
+
 for p in pathlib.Path(keras_model_base_path).glob('*/*/encoder_kr'):
     strp = str(p)
     name = os.sep.join(strp.split(os.sep)[-3:-1])
@@ -63,12 +64,13 @@ keras_encoders_TRB = {}
 keras_decoders_TRB = {}
 for name in keras_model_names:
     if name.startswith('TRA'):
-        keras_encoders_TRA[name.split('/')[1]] = os.path.join(keras_model_base_path,name,'encoder_kr') #keras.models.load_model(base_path+name+'/encoder_kr')
-        keras_decoders_TRA[name.split('/')[1]] = os.path.join(keras_model_base_path,name,'decoder_kr')
+        keras_encoders_TRA[name.split('\\')[1]] = os.path.join(keras_model_base_path,name,'encoder_kr') #keras.models.load_model(base_path+name+'/encoder_kr')
+        keras_decoders_TRA[name.split('\\')[1]] = os.path.join(keras_model_base_path,name,'decoder_kr')
     else:
-        keras_encoders_TRB[name.split('/')[1]] = os.path.join(keras_model_base_path,name,'encoder_kr')
-        keras_decoders_TRB[name.split('/')[1]] = os.path.join(keras_model_base_path,name,'decoder_kr')
-
+        keras_encoders_TRB[name.split('\\')[1]] = os.path.join(keras_model_base_path,name,'encoder_kr')
+        keras_decoders_TRB[name.split('\\')[1]] = os.path.join(keras_model_base_path,name,'decoder_kr')
+print("Populated Model Dictionaries")
+print(keras_decoders_TRB)
 
 def load_logged_models(model_dict,as_keras=True):
     """ Load a dictionary of named models and paths into models dictionary
@@ -119,7 +121,7 @@ def load_named_models(model_names,chain='TRB',as_keras=True, encoders=True):
         A dictionary keyed my model names and with vlaues as mlflow models
     """
     loaded_models = dict()
-    
+    print(keras_encoders_TRB)
     if encoders:
         if chain=='TRB':
             if not as_keras:
